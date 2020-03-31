@@ -5,21 +5,20 @@ using UnityEngine;
 public class Female_Controller : MonoBehaviour
 {
     float walkspeed = 2;
-    float runspeed = 4;
-    float bwalkspeed = 3;
+    float runspeed = 5;
+    float bwalkspeed = 5;
     float jumpspeed = 2;
     float rotSpeed = 80;
     float rot = 0f;
     float gravity = 5;
 
-   private Vector3 moveDir = Vector3.zero;
+    private Vector3 moveDir = Vector3.zero;
 
     CharacterController controller;
     Animator anim;
 
     void Start()
     {
-
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
     }
@@ -56,16 +55,35 @@ public class Female_Controller : MonoBehaviour
             if (Input.GetKey(KeyCode.Space))
             {
                 anim.SetInteger("condition", 3);
-                moveDir = new Vector3(0, 4, 0);
+                moveDir = new Vector3(0, 2, 0);
                 moveDir *= jumpspeed;
                 moveDir = transform.TransformDirection(moveDir);
-            }
+        }
+            if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.B)) {
+                anim.SetInteger("condition", 4);
+                moveDir = new Vector3(0, 2, -1);
+                moveDir *= jumpspeed;
+                moveDir = transform.TransformDirection(moveDir);
 
-            if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.R)||Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.B))
+        }
+            if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.W)) {
+                anim.SetInteger("condition", 5);
+                moveDir = new Vector3(0, 2, 1);
+                moveDir *= jumpspeed;
+                moveDir = transform.TransformDirection(moveDir);
+        }
+            if (Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.R)) {
+                anim.SetInteger("condition", 6);
+                moveDir = new Vector3(0, 2, 3);
+                moveDir *= jumpspeed;
+                moveDir = transform.TransformDirection(moveDir);
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.R)||Input.GetKeyUp(KeyCode.W) || Input.GetKeyUp(KeyCode.B))
             {
                 anim.SetInteger("condition", 0);
                 moveDir = new Vector3(0, 0, 0);
-            }
+        }
 
         rot += Input.GetAxis("Horizontal") * rotSpeed * Time.deltaTime;
         transform.eulerAngles = new Vector3(0,rot,0); 
